@@ -1,3 +1,5 @@
+import { servicesData } from '../data/servicesData.js';
+
 export const seoConfig = {
   '/': {
     title: 'Ритуальная компания - памятники, гравировка и благоустройство',
@@ -36,3 +38,20 @@ export const seoConfig = {
     description: 'Телефон, адрес, график работы и схема проезда.',
   },
 };
+
+export function getSeoConfig(pathname) {
+  const exactSeo = seoConfig[pathname];
+  if (exactSeo) {
+    return exactSeo;
+  }
+
+  const service = servicesData.find((item) => item.path === pathname);
+  if (service) {
+    return {
+      title: `${service.title} - Ритуальная компания`,
+      description: service.short,
+    };
+  }
+
+  return seoConfig['/'];
+}

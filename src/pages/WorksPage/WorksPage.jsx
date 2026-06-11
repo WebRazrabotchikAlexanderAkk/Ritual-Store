@@ -47,6 +47,7 @@ export default function WorksPage() {
           ['Благоустройство', 'improvement'],
           ['Изготовление памятника', 'making'],
           ['Наша гравировка', 'engraving'],
+          ['Примеры Керамогранита', 'porcelain'],
           ['Детали и уход', 'care'],
         ].map(([label, id]) => (
           <Button key={id} variant="outlined" onClick={() => scrollToSection(id)}>
@@ -149,6 +150,33 @@ export default function WorksPage() {
                 alt={work.title}
                 loading="lazy"
                 onClick={() => openViewer(worksData.engravingGallery, index)}
+                sx={{ width: '100%', aspectRatio: '4 / 3', objectFit: 'cover', cursor: 'pointer' }}
+              />
+              <CardContent>
+                <Typography variant="h6" fontWeight={800}>
+                  {work.title}
+                </Typography>
+                <Typography color="text.secondary">{work.description}</Typography>
+              </CardContent>
+            </Card>
+          ))}
+        </Box>
+      </Box>
+
+      <Box id="porcelain" sx={{ mt: 8, scrollMarginTop: 100 }}>
+        <SectionTitle
+          title="Примеры Керамогранита"
+          description="Варианты портретных плит и декоративных решений, которые можно согласовать по размеру и способу установки."
+        />
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }, gap: 2.5 }}>
+          {worksData.porcelainGallery.map((work, index) => (
+            <Card key={work.title} className="reveal-card" data-testid="porcelain-example-card">
+              <Box
+                component="img"
+                src={publicPath(work.image)}
+                alt={work.title}
+                loading="lazy"
+                onClick={() => openViewer(worksData.porcelainGallery, index)}
                 sx={{ width: '100%', aspectRatio: '4 / 3', objectFit: 'cover', cursor: 'pointer' }}
               />
               <CardContent>

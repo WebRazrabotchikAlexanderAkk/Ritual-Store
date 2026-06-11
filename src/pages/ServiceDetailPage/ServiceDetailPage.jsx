@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
+import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
 import List from '@mui/material/List';
@@ -16,11 +17,30 @@ import { routesConfig } from '../../config/routesConfig.js';
 import { publicPath } from '../../utils/publicPath.js';
 import NotFoundPage from '../NotFoundPage/NotFoundPage.jsx';
 
+const relatedServiceIds = {
+  'monument-making': ['monument-installation', 'engraving', 'delivery-installation'],
+  'monument-installation': ['delivery-installation', 'grave-improvement', 'monument-making'],
+  'grave-improvement': ['grave-care', 'delivery-installation', 'monument-installation'],
+  engraving: ['monument-photo', 'porcelain-stoneware', 'monument-making'],
+  'monument-photo': ['engraving', 'porcelain-stoneware', 'monument-making'],
+  'porcelain-stoneware': ['monument-photo', 'engraving', 'monument-making'],
+  'ritual-goods': ['grave-improvement', 'grave-care', 'delivery-installation'],
+  'grave-care': ['grave-improvement', 'ritual-goods', 'delivery-installation'],
+  'delivery-installation': ['monument-installation', 'monument-making', 'grave-improvement'],
+};
+
+function getRelatedServices(serviceId) {
+  const ids = relatedServiceIds[serviceId] || [];
+  return ids.map((id) => servicesData.find((item) => item.id === id)).filter(Boolean);
+}
+
 export default function ServiceDetailPage() {
   const { serviceId } = useParams();
   const service = servicesData.find((item) => item.id === serviceId);
 
   if (!service) return <NotFoundPage />;
+
+  const relatedServices = getRelatedServices(service.id);
 
   return (
     <Container maxWidth="xl" sx={{ py: { xs: 5, md: 8 } }}>
@@ -91,12 +111,23 @@ export default function ServiceDetailPage() {
 
       <Card variant="outlined" sx={{ mt: 3, boxShadow: 'none' }}>
         <CardContent>
-          <Typography component="h2" variant="h5" fontWeight={800}>
+          <Typography component="h2" variant="h5" fontWeight={800} sx={{ mb: 2 }}>
             Связанные услуги
           </Typography>
-          <Typography color="text.secondary" sx={{ mt: 1 }}>
-            Здесь позже появятся связанные услуги
-          </Typography>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' }, gap: 2 }}>
+            {relatedServices.map((related) => (
+              <Card key={related.id} variant="outlined" sx={{ boxShadow: 'none' }}>
+                <CardActionArea component={RouterLink} to={related.path} sx={{ height: '100%' }}>
+                  <CardContent>
+                    <Typography component="h3" variant="h6" fontWeight={800} sx={{ mb: 1 }}>
+                      {related.title}
+                    </Typography>
+                    <Typography color="text.secondary">{related.short}</Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            ))}
+          </Box>
         </CardContent>
       </Card>
     </Container>

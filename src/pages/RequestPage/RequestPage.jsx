@@ -31,6 +31,19 @@ import { publicPath } from '../../utils/publicPath.js';
 import { sendRequest } from '../../utils/requestSender.js';
 import { isInsideWorkHours } from '../../utils/workHours.js';
 
+const portraitOptions = [
+  {
+    value: 'engraving',
+    label: 'Гравировка',
+    description: 'портрет наносится на памятник гравировкой.',
+  },
+  {
+    value: 'porcelain',
+    label: 'Керамогранит',
+    description: 'утопленная керамогранитная плита в памятнике.',
+  },
+];
+
 export default function RequestPage() {
   const storedSelected = useMemo(() => {
     try {
@@ -63,6 +76,7 @@ export default function RequestPage() {
 
   const phoneValue = request.form.phoneMode === 'ru' ? request.form.phone : request.form.foreignPhone;
   const hasPhone = phoneValue.replace(/\D/g, '').length >= 6;
+  const selectedPortrait = portraitOptions.find((option) => option.value === request.form.portraitType);
 
   const addFiles = (event) => {
     const result = validateImageFiles(event.target.files || []);
@@ -212,6 +226,35 @@ export default function RequestPage() {
           <Typography color="text.secondary">Прикреплено фото: {request.photos.length}</Typography>
         </FormSection>
 
+        <FormSection title="Портрет на памятнике">
+          <FormLabel>Если нужен портрет, выберите способ оформления</FormLabel>
+          <RadioGroup
+            value={request.form.portraitType || ''}
+            onChange={(event) => request.updateField('portraitType', event.target.value)}
+          >
+            {portraitOptions.map((option) => (
+              <FormControlLabel
+                key={option.value}
+                value={option.value}
+                control={<Radio />}
+                label={
+                  <Box>
+                    <Typography component="span" fontWeight={700}>
+                      {option.label}
+                    </Typography>
+                    <Typography component="span" display="block" color="text.secondary">
+                      {option.description}
+                    </Typography>
+                  </Box>
+                }
+              />
+            ))}
+          </RadioGroup>
+          <Typography color="text.secondary">
+            Поле необязательное: можно оставить без выбора, если портрет не нужен или способ еще не согласован.
+          </Typography>
+        </FormSection>
+
         <FormSection title="Детали заказа">
           <TextField
             select
@@ -301,6 +344,7 @@ export default function RequestPage() {
             <Typography>Телефон: {phoneValue}</Typography>
             <Typography>Город: {request.form.city || 'не указан'}</Typography>
             <Typography>Адрес кладбища: {request.form.cemeteryAddress || 'не указан'}</Typography>
+            {selectedPortrait ? <Typography>Портрет на памятнике: {selectedPortrait.label}</Typography> : null}
             <Typography>Дедлайн: {request.form.deadline || 'не указан'}</Typography>
             <Typography>Количество фото: {request.photos.length}</Typography>
             <Typography>Количество выбранных элементов: {request.selectedItems.length}</Typography>

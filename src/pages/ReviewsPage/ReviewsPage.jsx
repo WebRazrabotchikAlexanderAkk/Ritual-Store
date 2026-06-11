@@ -7,9 +7,11 @@ import Container from '@mui/material/Container';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import PhoneIcon from '@mui/icons-material/Phone';
 import { Link as RouterLink } from 'react-router-dom';
 import ImageViewer from '../../components/Gallery/ImageViewer.jsx';
 import { routesConfig } from '../../config/routesConfig.js';
+import { siteConfig } from '../../config/siteConfig.js';
 import { reviewsData } from '../../data/reviewsData.js';
 import { publicPath } from '../../utils/publicPath.js';
 
@@ -23,7 +25,7 @@ export default function ReviewsPage() {
       </Typography>
       <Stack spacing={3}>
         {reviewsData.map((review, index) => (
-          <Card key={`${review.name}-${review.date}`}>
+          <Card key={`${review.name}-${review.date}`} component="article">
             <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '0.85fr 1.15fr' } }}>
               <Box
                 component="img"
@@ -42,8 +44,8 @@ export default function ReviewsPage() {
                   <Rating value={review.rating} readOnly />
                   <Typography sx={{ fontSize: 18, lineHeight: 1.7 }}>{review.text}</Typography>
                   <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5}>
-                    <Button component={RouterLink} to={routesConfig.request} variant="contained">
-                      Оставить заявку
+                    <Button href={siteConfig.phoneHref} startIcon={<PhoneIcon />} variant="contained">
+                      Позвонить
                     </Button>
                     <Button component={RouterLink} to={routesConfig.request} variant="outlined">
                       Заказать расчёт

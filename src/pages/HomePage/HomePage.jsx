@@ -21,6 +21,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Link as RouterLink } from 'react-router-dom';
+import CallAction from '../../components/CallAction/CallAction.jsx';
 import SectionTitle from '../../components/SectionTitle/SectionTitle.jsx';
 import { siteConfig } from '../../config/siteConfig.js';
 import { routesConfig } from '../../config/routesConfig.js';
@@ -63,11 +64,29 @@ export default function HomePage() {
               <Typography variant="h5" color="text.secondary" sx={{ lineHeight: 1.45 }}>
                 Памятники, гравировка и благоустройство с внимательным отношением к каждому заказу.
               </Typography>
-              <Typography variant="h6" color="primary.main" fontWeight={800}>
-                {siteConfig.phone}
-              </Typography>
+              <Stack spacing={0.5} alignItems="flex-start">
+                <Typography color="text.secondary" fontWeight={700}>
+                  Консультация по телефону
+                </Typography>
+                <Typography
+                  component="a"
+                  href={siteConfig.phoneHref}
+                  variant="h4"
+                  color="primary.main"
+                  fontWeight={800}
+                  sx={{ fontSize: { xs: '1.8rem', sm: '2.125rem' }, lineHeight: 1.15 }}
+                >
+                  {siteConfig.phone}
+                </Typography>
+              </Stack>
               <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5}>
-                <Button href={siteConfig.phoneHref} variant="contained" size="large" startIcon={<PhoneIcon />}>
+                <Button
+                  href={siteConfig.phoneHref}
+                  variant="contained"
+                  size="large"
+                  startIcon={<PhoneIcon />}
+                  aria-label={`Позвонить ${siteConfig.phone}`}
+                >
                   Позвонить
                 </Button>
                 <Button component={RouterLink} to={routesConfig.request} variant="outlined" size="large">
@@ -158,6 +177,11 @@ export default function HomePage() {
         </Container>
       </Box>
 
+      <CallAction
+        title="Не уверены, с чего начать? Позвоните"
+        description="Подскажем, какие услуги подойдут, какие фотографии или размеры нужны и как спокойно оформить заказ."
+      />
+
       <Box sx={{ bgcolor: 'background.paper', py: { xs: 5, md: 8 } }}>
         <Container maxWidth="xl">
           <SectionTitle title="Этапы работы" description="Нажмите на этап, чтобы раскрыть подробности." />
@@ -213,6 +237,11 @@ export default function HomePage() {
           </Box>
         </Box>
       </Container>
+
+      <CallAction
+        title="Поможем выбрать и объясним цену"
+        description="Можно просто позвонить: специалист задаст несколько понятных вопросов и подскажет следующий шаг."
+      />
 
       <Container maxWidth="xl" sx={{ py: { xs: 5, md: 8 } }}>
         <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }, gap: 2 }}>

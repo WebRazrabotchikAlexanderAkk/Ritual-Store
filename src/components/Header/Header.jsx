@@ -5,8 +5,10 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
+import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
@@ -20,6 +22,15 @@ import { routesConfig } from '../../config/routesConfig.js';
 import { siteConfig } from '../../config/siteConfig.js';
 import FavoritesButton from '../FavoritesButton/FavoritesButton.jsx';
 import ThemeToggle from '../ThemeToggle/ThemeToggle.jsx';
+
+const primaryMobilePaths = new Set([
+  routesConfig.services,
+  routesConfig.works,
+  routesConfig.contacts,
+]);
+
+const primaryMobileNavigation = navigationData.filter((item) => primaryMobilePaths.has(item.path));
+const secondaryMobileNavigation = navigationData.filter((item) => !primaryMobilePaths.has(item.path));
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -42,8 +53,8 @@ export default function Header() {
               color: 'primary.main',
               mr: { md: 3 },
               flexShrink: 0,
-              maxWidth: { xs: 112, sm: 'none' },
-              fontSize: { xs: 15, sm: 20 },
+              maxWidth: { xs: 86, sm: 'none' },
+              fontSize: { xs: 14, sm: 20 },
               lineHeight: { xs: 1.05, sm: 1.2 },
             }}
           >
@@ -78,18 +89,11 @@ export default function Header() {
             href={siteConfig.phoneHref}
             color="primary"
             startIcon={<PhoneIcon />}
+            aria-label={`Позвонить ${siteConfig.phone}`}
             sx={{ display: { xs: 'none', sm: 'inline-flex' }, flexShrink: 0 }}
           >
             {siteConfig.phone}
           </Button>
-          <IconButton
-            href={siteConfig.phoneHref}
-            color="primary"
-            size="small"
-            sx={{ display: { xs: 'inline-flex', sm: 'none' }, p: { xs: 0.65, sm: 1 } }}
-          >
-            <PhoneIcon />
-          </IconButton>
           <IconButton
             component={RouterLink}
             to={routesConfig.request}
@@ -111,12 +115,36 @@ export default function Header() {
             <MenuIcon />
           </IconButton>
         </Toolbar>
+        <Box sx={{ display: { xs: 'block', sm: 'none' }, pb: 1.25 }}>
+          <Button
+            href={siteConfig.phoneHref}
+            variant="contained"
+            fullWidth
+            startIcon={<PhoneIcon />}
+            aria-label={`Позвонить ${siteConfig.phone}`}
+          >
+            Позвонить {siteConfig.phone}
+          </Button>
+        </Box>
       </Container>
 
       <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
         <Box sx={{ width: 300, pt: 2 }}>
           <List>
-            {navigationData.map((item) => (
+            <ListItemButton component="a" href={siteConfig.phoneHref} onClick={() => setOpen(false)}>
+              <ListItemIcon>
+                <PhoneIcon color="primary" />
+              </ListItemIcon>
+              <ListItemText primary="Позвонить" secondary={siteConfig.phone} />
+            </ListItemButton>
+            <Divider sx={{ my: 1 }} />
+            {primaryMobileNavigation.map((item) => (
+              <ListItemButton key={item.path} component={RouterLink} to={item.path} onClick={() => setOpen(false)}>
+                <ListItemText primary={item.label} />
+              </ListItemButton>
+            ))}
+            <Divider sx={{ my: 1 }} />
+            {secondaryMobileNavigation.map((item) => (
               <ListItemButton key={item.path} component={RouterLink} to={item.path} onClick={() => setOpen(false)}>
                 <ListItemText primary={item.label} />
               </ListItemButton>

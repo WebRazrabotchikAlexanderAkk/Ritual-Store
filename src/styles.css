@@ -17,6 +17,14 @@ a {
   text-decoration: none;
 }
 
+a:focus-visible,
+button:focus-visible,
+[role='button']:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #a57b34;
+  outline-offset: 3px;
+}
+
 img {
   max-width: 100%;
   display: block;

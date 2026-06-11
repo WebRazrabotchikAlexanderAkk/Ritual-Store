@@ -11,6 +11,7 @@ const emptyForm = {
   city: '',
   cemeteryAddress: '',
   placeDescription: '',
+  portraitType: '',
   deadline: '',
   comment: '',
   agreement: false,

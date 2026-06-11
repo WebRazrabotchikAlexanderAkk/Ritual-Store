@@ -28,7 +28,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <AppContext.Provider value={contextValue}>
-        <BrowserRouter basename={basename}>
+        <BrowserRouter basename={basename} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <AppRouter />
         </BrowserRouter>
         <Snackbar

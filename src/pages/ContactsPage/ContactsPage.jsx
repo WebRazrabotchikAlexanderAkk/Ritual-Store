@@ -33,12 +33,27 @@ export default function ContactsPage() {
               <Typography variant="h5" fontWeight={800}>
                 {siteConfig.companyName}
               </Typography>
-              <Typography>{siteConfig.phone}</Typography>
+              <Typography
+                component="a"
+                href={siteConfig.phoneHref}
+                variant="h5"
+                color="primary.main"
+                fontWeight={800}
+              >
+                {siteConfig.phone}
+              </Typography>
               <Typography>{siteConfig.address}</Typography>
               <Typography>{siteConfig.workSchedule}</Typography>
-              <Typography color="text.secondary">Перед приездом можно позвонить и уточнить детали.</Typography>
+              <Typography color="text.secondary">
+                Консультация по телефону. Перед приездом можно позвонить и уточнить детали.
+              </Typography>
               <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5}>
-                <Button href={siteConfig.phoneHref} startIcon={<PhoneIcon />} variant="contained">
+                <Button
+                  href={siteConfig.phoneHref}
+                  startIcon={<PhoneIcon />}
+                  variant="contained"
+                  aria-label={`Позвонить ${siteConfig.phone}`}
+                >
                   Позвонить
                 </Button>
                 <Button component={RouterLink} to={routesConfig.request} variant="outlined">
@@ -55,14 +70,21 @@ export default function ContactsPage() {
               minHeight: 320,
               display: 'grid',
               placeItems: 'center',
+              textAlign: 'center',
+              px: 3,
               bgcolor: 'background.paper',
               backgroundImage:
                 'linear-gradient(135deg, rgba(123,36,50,0.12), rgba(165,123,52,0.1)), repeating-linear-gradient(45deg, transparent 0, transparent 16px, rgba(0,0,0,0.035) 17px, rgba(0,0,0,0.035) 18px)',
             }}
           >
-            <Typography variant="h5" fontWeight={800}>
-              Карта проезда
-            </Typography>
+            <Stack spacing={1}>
+              <Typography variant="h5" fontWeight={800}>
+                Карта будет добавлена перед запуском
+              </Typography>
+              <Typography color="text.secondary">
+                Перед приездом уточните адрес и удобное время по телефону.
+              </Typography>
+            </Stack>
           </Box>
         </Card>
       </Box>

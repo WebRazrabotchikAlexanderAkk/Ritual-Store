@@ -10,7 +10,9 @@ export default function Footer() {
       <Container maxWidth="xl">
         <Stack direction={{ xs: 'column', md: 'row' }} spacing={1.5} justifyContent="space-between">
           <Typography fontWeight={800}>{siteConfig.companyName}</Typography>
-          <Typography color="text.secondary">{siteConfig.phone}</Typography>
+          <Typography component="a" href={siteConfig.phoneHref} color="primary.main" fontWeight={800}>
+            {siteConfig.phone}
+          </Typography>
           <Typography color="text.secondary">{siteConfig.address}</Typography>
           <Typography color="text.secondary">{siteConfig.workSchedule}</Typography>
           <Typography color="text.secondary">{siteConfig.copyright}</Typography>

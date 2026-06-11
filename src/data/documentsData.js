@@ -4,12 +4,14 @@ export const documentsData = [
     format: 'PDF',
     href: '/documents/personal-data-policy.pdf',
     action: 'Открыть',
+    available: false,
   },
   {
     title: 'Реквизиты компании',
     format: 'PDF',
     href: '/documents/company-details.pdf',
     action: 'Открыть',
+    available: false,
   },
   {
     title: 'Реквизиты компании',
@@ -17,18 +19,21 @@ export const documentsData = [
     href: '/documents/company-details.docx',
     action: 'Скачать',
     download: true,
+    available: false,
   },
   {
     title: 'Условия нашего договора',
     format: 'PDF',
     href: '/documents/contract-terms.pdf',
     action: 'Открыть',
+    available: false,
   },
   {
     title: 'Образец нашего договора',
     format: 'PDF',
     href: '/documents/contract-sample.pdf',
     action: 'Открыть',
+    available: false,
   },
   {
     title: 'Образец нашего договора',
@@ -36,5 +41,6 @@ export const documentsData = [
     href: '/documents/contract-sample.docx',
     action: 'Скачать',
     download: true,
+    available: false,
   },
 ];

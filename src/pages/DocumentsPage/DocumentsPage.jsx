@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import Chip from '@mui/material/Chip';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -38,17 +39,24 @@ export default function DocumentsPage() {
                   <Typography color="text.secondary" sx={{ mb: 2 }}>
                     {document.format}
                   </Typography>
-                  <Button
-                    href={publicPath(document.href)}
-                    target={document.download ? undefined : '_blank'}
-                    rel={document.download ? undefined : 'noreferrer'}
-                    download={document.download}
-                    variant="outlined"
-                    startIcon={document.download ? <DownloadIcon /> : <OpenInNewIcon />}
-                    onClick={() => document.download && notify(notificationMessages.documentDownload)}
-                  >
-                    {document.action}
-                  </Button>
+                  {document.available ? (
+                    <Button
+                      href={publicPath(document.href)}
+                      target={document.download ? undefined : '_blank'}
+                      rel={document.download ? undefined : 'noreferrer'}
+                      download={document.download}
+                      variant="outlined"
+                      startIcon={document.download ? <DownloadIcon /> : <OpenInNewIcon />}
+                      onClick={() => document.download && notify(notificationMessages.documentDownload)}
+                    >
+                      {document.action}
+                    </Button>
+                  ) : (
+                    <Stack spacing={1} alignItems="flex-start">
+                      <Chip label="Готовится к запуску" variant="outlined" color="warning" />
+                      <Typography color="text.secondary">Файл будет добавлен перед запуском.</Typography>
+                    </Stack>
+                  )}
                 </Box>
               </Stack>
             </CardContent>

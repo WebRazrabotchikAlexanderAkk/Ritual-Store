@@ -5,14 +5,29 @@ const shared = {
   typography: {
     fontFamily: 'Inter, Roboto, Arial, sans-serif',
     h1: { fontWeight: 700, lineHeight: 1.08, letterSpacing: 0 },
-    h2: { fontWeight: 700, lineHeight: 1.16, letterSpacing: 0 },
-    h3: { fontWeight: 700, lineHeight: 1.2, letterSpacing: 0 },
+    h2: {
+      fontWeight: 700,
+      lineHeight: 1.16,
+      letterSpacing: 0,
+      '@media (max-width:600px)': { fontSize: '2.75rem' },
+    },
+    h3: {
+      fontWeight: 700,
+      lineHeight: 1.2,
+      letterSpacing: 0,
+      '@media (max-width:600px)': { fontSize: '2rem' },
+    },
     button: { fontWeight: 700, letterSpacing: 0, textTransform: 'none' },
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: { borderRadius: 8, minHeight: 44 },
+      },
+    },
+    MuiIconButton: {
+      styleOverrides: {
+        root: { minWidth: 44, minHeight: 44 },
       },
     },
     MuiCard: {
